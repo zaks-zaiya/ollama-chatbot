@@ -5,7 +5,7 @@
 npm install
 ```
 
-### Build Tailwindcss file
+### Build Tailwind CSS File
 ```bash
 npm run build:css
 ```
