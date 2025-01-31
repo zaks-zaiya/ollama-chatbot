@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+.dot-typing {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 3px;
+  background-color: black;
+  border-radius: 50%;
+  animation: typing 1.5s infinite;
+}
+
+.dot-typing::before,
+.dot-typing::after {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 3px;
+  background-color: black;
+  border-radius: 50%;
+  animation: typing 1.5s infinite;
+}
+
+.dot-typing::before {
+  animation-delay: 0.2s;
+}
+
+.dot-typing::after {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0% {
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}

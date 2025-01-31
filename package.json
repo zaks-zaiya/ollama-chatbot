@@ -1,0 +1,20 @@
+{
+  "name": "ollama-chatbot",
+  "version": "1.0.0",
+  "description": "Electron chatbot using Ollama",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "watch:css": "tailwindcss -i ./src/styles/input.css -o ./src/styles/output.css --watch",
+    "build:css": "tailwindcss -i ./src/styles/input.css -o ./src/styles/output.css"
+  },
+  "dependencies": {
+    "@electron/packager": "^18.3.6",
+    "@tailwindcss/cli": "^4.0.1",
+    "tailwindcss": "^4.0.1"
+  },
+  "devDependencies": {
+    "electron": "^34.0.2"
+  },
+  "author": "Abdullah Hrp"
+}
