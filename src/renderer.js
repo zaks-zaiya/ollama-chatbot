@@ -33,7 +33,7 @@ function scrollToBottom(force = false) {
 function addChatHeader() {
     const chatHeader = document.createElement('div');
     chatHeader.className = "text-center text-lg font-bold mb-4";
-    chatHeader.innerHTML = `<div class="flex w-full justify-between"><span class="text-emerald-900">Deepseek AI</span><span class="text-sky-900">Abdullah Hrp</span></div>`;
+    chatHeader.innerHTML = `<div class="flex w-full justify-between"><span class="text-emerald-900">Llama 3.1</span><span class="text-sky-900">Abdullah Hrp</span></div>`;
     messagesDiv.prepend(chatHeader);
 }
 
@@ -55,7 +55,7 @@ function addMessage(text, isUser = false, isLoading = false, messageId = null) {
             }`;
 
         const name = isUser ? '<span class="font-bold text-sm text-white">Abdullah Hrp</span>'
-            : '<span class="font-bold text-sm text-white">Deepseek AI</span>';
+            : '<span class="font-bold text-sm text-white">Llama 3.1</span>';
 
         const timestamp = `<div class="text-xs opacity-75 mt-1 text-right">${formatTimestamp()}</div>`;
 
@@ -79,13 +79,31 @@ messagesDiv.addEventListener('scroll', () => {
     shouldAutoScroll = isAtBottom;
 });
 
-function formatMessage(text) {
-    const withoutTags = text
-        .replace(/\<think\>/g, '')
-        .replace(/\<\/think\>/g, '');
+function convertMarkdownToHtml(markdown) {
+    let html = markdown;
+    
+    html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+    html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+    html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+    
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+    
+    html = html.replace(/`(.*?)`/g, '<code>$1</code>');
+    
+    html = html.replace(/^\s*[-*]\s(.*)/gm, '<li>$1</li>');
+    html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+    
+    html = html.replace(/\n/g, '<br>');
+    
+    return html;
+}
 
-    const withoutLeadingNewlines = withoutTags.replace(/^\n+/, '');
-    return withoutLeadingNewlines.replace(/\n/g, '<br>');
+function formatMessage(text) {
+    return convertMarkdownToHtml(text);
 }
 
 function setGenerating(isGenerating) {
@@ -127,7 +145,7 @@ ipcRenderer.on('updateResponse', (event, response) => {
     const lastMessage = messagesDiv.lastChild;
     if (lastMessage) {
         const timestamp = `<div class="text-xs opacity-75 mt-1 text-right">${formatTimestamp()}</div>`;
-        lastMessage.innerHTML = `<span class="font-bold text-sm text-white">Deepseek AI</span><br>` + formatMessage(response) + timestamp;
+        lastMessage.innerHTML = `<span class="font-bold text-sm text-white">Llama 3.1</span><br>` + formatMessage(response) + timestamp;
         scrollToBottom();
         hljs.highlightAll();
     }

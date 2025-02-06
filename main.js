@@ -75,8 +75,8 @@ ipcMain.handle('chat-request', async (event, message) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                model: 'deepseek-r1:8b',
-                prompt: message,
+                model: 'llama3.1:8b-instruct-q5_K_M',
+                prompt: 'analyze this: \n' + message + '\n if that math question, then answer quick step by step how to solve it. if that not math question, then absolutely no need any explanation. just reply with: "You are only allow to ask math queaion."',
             }),
             signal
         });
